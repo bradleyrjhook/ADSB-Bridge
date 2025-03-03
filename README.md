@@ -1,71 +1,97 @@
-# ![Logo](https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/Doc/icons/logo.jpg) Json.NET
+# ADSB Bridge
 
-[![NuGet version (Newtonsoft.Json)](https://img.shields.io/nuget/v/Newtonsoft.Json.svg?style=flat-square)](https://www.nuget.org/packages/Newtonsoft.Json/)
-[![Build status](https://dev.azure.com/jamesnk/Public/_apis/build/status/JamesNK.Newtonsoft.Json?branchName=master)](https://dev.azure.com/jamesnk/Public/_build/latest?definitionId=8)
+ADSB Bridge is a Windows application that bridges BaseStation's SBS-1 protocol (port 30003) to a JSON format for use with RadarSites and other compatible applications. It acts as a middleman, converting real-time aircraft data from BaseStation format into standardized JSON messages.
 
-Json.NET is a popular high-performance JSON framework for .NET
+## Features
 
-## Serialize JSON
+- Converts BaseStation format (SBS-1) to JSON in real-time
+- Handles multiple TCP client connections
+- Supports MSG, ID, AIR, and STA message types
+- Provides real-time aircraft tracking information
+- Includes aircraft cleanup for stale data (60-second timeout)
+- Shows server and connection status
+- Includes statistics and monitoring capabilities
 
-```csharp
-Product product = new Product();
-product.Name = "Apple";
-product.Expiry = new DateTime(2008, 12, 28);
-product.Sizes = new string[] { "Small" };
+## Configuration
 
-string json = JsonConvert.SerializeObject(product);
-// {
-//   "Name": "Apple",
-//   "Expiry": "2008-12-28T00:00:00",
-//   "Sizes": [
-//     "Small"
-//   ]
-// }
+### BaseStation Connection
+- Default IP: 127.0.0.1
+- Default Port: 30003
+
+### JSON Server
+- Default IP: 127.0.0.1
+- Default Port: 30154
+
+## JSON Format
+```json
+{
+  "now": 1740897867.249,
+  "hex": "ABCD12",
+  "type": "adsb_icao",
+  "flight": "",
+  "alt_baro": 0,
+  "alt_geom": 0,
+  "gs": 281.0,
+  "ias": 0.0,
+  "mach": 0.0,
+  "track": 70.0,
+  "mag_heading": 0.0,
+  "true_heading": 0.0,
+  "baro_rate": -1280,
+  "squawk": "0000",
+  "emergency": "none",
+  "category": "A1",
+  "lat": 0.0,
+  "lon": 0.0,
+  "nic": 0,
+  "rc": 0,
+  "seen_pos": 0.0,
+  "r_dist": 0.0,
+  "r_dir": 0.0,
+  "nic_baro": 0,
+  "nac_p": 0,
+  "nac_v": 0,
+  "sil": 0,
+  "sil_type": "perhour",
+  "gva": 0,
+  "sda": 0,
+  "alert": 0,
+  "spi": 0,
+  "messages": 2,
+  "seen": 0.0,
+  "rssi": -30.0
+}
 ```
 
-## Deserialize JSON
+## Usage
 
-```csharp
-string json = @"{
-  'Name': 'Bad Boys',
-  'ReleaseDate': '1995-4-7T00:00:00',
-  'Genres': [
-    'Action',
-    'Comedy'
-  ]
-}";
+1. Start RTL1090 software and ensure it's outputting data on port 30003
+2. Launch ADSB Bridge
+3. Configure the BaseStation IP and port if different from defaults
+4. Configure the Server IP and port for JSON output
+5. Click "Start" to begin bridging data
+6. Connect your client application (like RadarSites) to the JSON server port
 
-Movie m = JsonConvert.DeserializeObject<Movie>(json);
+## Features
+- Real-time data conversion
+- Connection status indicators
+- Console logging
+- JSON message viewing
+- Statistics monitoring
+- Sample JSON testing capability
+- Automatic stale aircraft cleanup
 
-string name = m.Name;
-// Bad Boys
-```
+## Status Indicators
+- 🔴 Red: Not connected
+- 🟡 Orange: Server ready, no client
+- 🟢 Green: Connected and transmitting
 
-## LINQ to JSON
+## System Requirements
+- Windows OS
+- .NET Framework 4.7.2 or higher
+- RTL1090, Dump1090 or compatible ADS-B decoder software
 
-```csharp
-JArray array = new JArray();
-array.Add("Manual text");
-array.Add(new DateTime(2000, 5, 23));
-
-JObject o = new JObject();
-o["MyArray"] = array;
-
-string json = o.ToString();
-// {
-//   "MyArray": [
-//     "Manual text",
-//     "2000-05-23T00:00:00"
-//   ]
-// }
-```
-
-## Links
-
-- [Homepage](https://www.newtonsoft.com/json)
-- [Documentation](https://www.newtonsoft.com/json/help)
-- [NuGet Package](https://www.nuget.org/packages/Newtonsoft.Json)
-- [Release Notes](https://github.com/JamesNK/Newtonsoft.Json/releases)
-- [Contributing Guidelines](https://github.com/JamesNK/Newtonsoft.Json/blob/master/CONTRIBUTING.md)
-- [License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/json.net)
+## Developer Notes
+- Aircraft data is only transmitted when new information is received
+- Stale aircraft are removed after 60 seconds of inactivity
+- JSON messages include Unix timestamp with millisecond precision
