@@ -2,16 +2,16 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ADSB_Server.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="BasestationIP" Type="System.String" Scope="User">
+    <Setting Name="basestationIP" Type="System.String" Scope="User">
       <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
-    <Setting Name="BasestationPort" Type="System.String" Scope="User">
+    <Setting Name="basestationPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30003</Value>
     </Setting>
-    <Setting Name="TCPSvrIP" Type="System.String" Scope="User">
+    <Setting Name="jsonTCPsvrIP" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.2.16</Value>
     </Setting>
-    <Setting Name="TCPSvrPort" Type="System.String" Scope="User">
+    <Setting Name="jsonTCPsvrPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30154</Value>
     </Setting>
   </Settings>

@@ -26,48 +26,48 @@ namespace ADSB_Server.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
-        public string BasestationIP {
+        public string basestationIP {
             get {
-                return ((string)(this["BasestationIP"]));
+                return ((string)(this["basestationIP"]));
             }
             set {
-                this["BasestationIP"] = value;
+                this["basestationIP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("30003")]
-        public string BasestationPort {
+        public int basestationPort {
             get {
-                return ((string)(this["BasestationPort"]));
+                return ((int)(this["basestationPort"]));
             }
             set {
-                this["BasestationPort"] = value;
+                this["basestationPort"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192.168.2.16")]
-        public string TCPSvrIP {
+        public string jsonTCPsvrIP {
             get {
-                return ((string)(this["TCPSvrIP"]));
+                return ((string)(this["jsonTCPsvrIP"]));
             }
             set {
-                this["TCPSvrIP"] = value;
+                this["jsonTCPsvrIP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("30154")]
-        public string TCPSvrPort {
+        public int jsonTCPsvrPort {
             get {
-                return ((string)(this["TCPSvrPort"]));
+                return ((int)(this["jsonTCPsvrPort"]));
             }
             set {
-                this["TCPSvrPort"] = value;
+                this["jsonTCPsvrPort"] = value;
             }
         }
     }

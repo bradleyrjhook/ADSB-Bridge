@@ -11,6 +11,7 @@ using System.Timers;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
+using System.Configuration;
 
 namespace ADSB_Server
 {
@@ -18,6 +19,7 @@ namespace ADSB_Server
     {
         private TcpListener tcpListener;
         private TcpClient basestationClient;
+        private bool autoScrollEnabled = true;
         private readonly Dictionary<string, Aircraft> aircraftList;
         private System.Timers.Timer cleanupTimer;
         private System.Timers.Timer jsonSendTimer;
@@ -44,8 +46,8 @@ namespace ADSB_Server
   ""squawk"": ""7500"",
   ""emergency"": ""none"",
   ""category"": ""A1"",
-  ""lat"": 37.7749,
-  ""lon"": -122.4194,
+  ""lat"": 45.7749,
+  ""lon"": -75.4194,
   ""nic"": 8,
   ""rc"": 20,
   ""seen_pos"": 0.5,
@@ -67,17 +69,26 @@ namespace ADSB_Server
         public MainForm()
         {
             InitializeComponent();
+            loadSettings();
             lblCurrentTime.Text = $"UTC: {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}";
+
             aircraftList = new Dictionary<string, Aircraft>();
             connectedClients = new List<TcpClient>();
             startTime = DateTime.UtcNow;
+
             this.FormClosing += MainForm_FormClosing;
+
+            // Set the size of both labels to be the same
+            lblBasestationStatus.Size = new System.Drawing.Size(105, 23);
+            lblServerStatus.Size = new System.Drawing.Size(105, 23);
 
             // Set window title without user info
             this.Text = "ADSB Bridge";
 
             // Initialize status
             UpdateConsole($"Application started...");
+
+            UpdateAutoScrollButtonText();
         }
 
         private string FormatUtcTime(DateTime time)
@@ -87,7 +98,23 @@ namespace ADSB_Server
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            StopActivities();
+            DialogResult result = MessageBox.Show("Do you want to save settings before exiting?", "Exit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                saveSettings();
+                StopActivities();
+                e.Cancel = false; // Allow the form to close
+            }
+            else if (result == DialogResult.No)
+            {
+                StopActivities();
+                e.Cancel = false; // Allow the form to close
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                e.Cancel = true; // Cancel the form closing
+            }
         }
 
         private void StartActivities()
@@ -278,7 +305,7 @@ namespace ADSB_Server
             try
             {
                 clientEndPoint = ((IPEndPoint)client.Client?.RemoteEndPoint)?.ToString() ?? "unknown";
-                UpdateConsole($"Client connected from {clientEndPoint}");
+                UpdateConsole($"Client connected...");
 
                 NetworkStream stream = client.GetStream();
 
@@ -403,7 +430,6 @@ namespace ADSB_Server
                 }
             }
         }
-
         private void UpdateConsole(string message)
         {
             if (InvokeRequired)
@@ -412,6 +438,11 @@ namespace ADSB_Server
                 return;
             }
 
+            // Store the exact scroll position
+            int originalFirstCharacterIndex = txtConsole.GetCharIndexFromPosition(new Point(0, 0));
+            int originalLineIndex = txtConsole.GetLineFromCharIndex(originalFirstCharacterIndex);
+
+            // Append new message with timestamp only
             txtConsole.AppendText($"{FormatUtcTime(DateTime.UtcNow)}: {message}{Environment.NewLine}");
 
             // Keep only last 1000 lines
@@ -421,8 +452,22 @@ namespace ADSB_Server
                 txtConsole.Lines = lines.Skip(lines.Length - 1000).ToArray();
             }
 
-            txtConsole.SelectionStart = txtConsole.TextLength;
-            txtConsole.ScrollToCaret();
+            if (!autoScrollEnabled)
+            {
+                // Calculate the position of the original line
+                int targetCharIndex = txtConsole.GetFirstCharIndexFromLine(originalLineIndex);
+                if (targetCharIndex >= 0)
+                {
+                    txtConsole.Select(targetCharIndex, 0);
+                    txtConsole.ScrollToCaret();
+                }
+            }
+            else
+            {
+                // Auto-scroll to bottom
+                txtConsole.SelectionStart = txtConsole.TextLength;
+                txtConsole.ScrollToCaret();
+            }
         }
 
         private void ClearConsole()
@@ -453,7 +498,7 @@ namespace ADSB_Server
                 return;
             }
             lblServerStatus.BackColor = sending ? Color.Green : connected ? Color.Orange : Color.Red;
-            lblServerStatus.Text = $"Server Status";
+            lblServerStatus.Text = $"  ";
         }
 
         private void btnExampleJson_Click(object sender, EventArgs e)
@@ -515,7 +560,6 @@ namespace ADSB_Server
         private void btnClearConsole_Click(object sender, EventArgs e)
         {
             ClearConsole();
-            UpdateConsole($"Console cleared at {FormatUtcTime(DateTime.UtcNow)}");
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -527,9 +571,46 @@ namespace ADSB_Server
             var stats = new StringBuilder();
             stats.AppendLine("Current Statistics:");
             stats.AppendLine($"Server running since: {FormatUtcTime(startTime)}");
-            stats.AppendLine($"Total aircraft tracked: {aircraftList.Count}");
+            stats.AppendLine($"Current aircraft tracking: {aircraftList.Count}");
             stats.AppendLine($"Connected clients: {connectedClients.Count}");
             UpdateConsole(stats.ToString());
+        }
+
+        private void loadSettings()
+        {
+            txtBasestationIP.Text = Properties.Settings.Default.basestationIP;
+            txtBasestationPort.Text = Properties.Settings.Default.basestationPort.ToString();
+            txtServerIP.Text = Properties.Settings.Default.jsonTCPsvrIP;
+            txtServerPort.Text = Properties.Settings.Default.jsonTCPsvrPort.ToString();
+        }
+
+        private void saveSettings()
+        {
+            Properties.Settings.Default.basestationIP = txtBasestationIP.Text;
+            Properties.Settings.Default.basestationPort = int.Parse(txtBasestationPort.Text);
+            Properties.Settings.Default.jsonTCPsvrIP = txtServerIP.Text;
+            Properties.Settings.Default.jsonTCPsvrPort = int.Parse(txtServerPort.Text);
+            Properties.Settings.Default.Save();
+        }
+        private void btnCopyConsole_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtConsole.Text);
+        }
+        private void btnToggleAutoScroll_Click(object sender, EventArgs e)
+        {
+            autoScrollEnabled = !autoScrollEnabled;
+            UpdateAutoScrollButtonText();
+        }
+        private void UpdateAutoScrollButtonText()
+        {
+            if (autoScrollEnabled)
+            {
+                btnToggleAutoScroll.Text = "▼ Auto-scroll is ON"; 
+            }
+            else
+            {
+                btnToggleAutoScroll.Text = "▪ Auto-scroll is OFF";
+            }
         }
     }
 }
