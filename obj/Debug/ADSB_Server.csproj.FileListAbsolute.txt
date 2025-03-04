@@ -1,16 +1,3 @@
-D:\Projects\ADSB_Server\obj\Debug\ADSB_Server.csproj.AssemblyReference.cache
-D:\Projects\ADSB_Server\obj\Debug\ADSB_Server.MainForm.resources
-D:\Projects\ADSB_Server\obj\Debug\ADSB_Server.Properties.Resources.resources
-D:\Projects\ADSB_Server\obj\Debug\ADSB_Server.csproj.GenerateResource.cache
-D:\Projects\ADSB_Server\obj\Debug\ADSB_Server.csproj.CoreCompileInputs.cache
-D:\Projects\ADSB_Server\bin\Debug\Newtonsoft.Json.dll
-D:\Projects\ADSB_Server\bin\Debug\Newtonsoft.Json.xml
-D:\Projects\ADSB_Server\obj\Debug\ADSB_Ser.38F3440B.Up2Date
-D:\Projects\ADSB_Server\bin\Debug\ADSB_Bridge.exe.config
-D:\Projects\ADSB_Server\bin\Debug\ADSB_Bridge.exe
-D:\Projects\ADSB_Server\bin\Debug\ADSB_Bridge.pdb
-D:\Projects\ADSB_Server\obj\Debug\ADSB_Bridge.exe
-D:\Projects\ADSB_Server\obj\Debug\ADSB_Bridge.pdb
 D:\Projects\ADSB_Server\ADSB-Bridge\bin\Debug\ADSB_Bridge.exe.config
 D:\Projects\ADSB_Server\ADSB-Bridge\bin\Debug\ADSB_Bridge.exe
 D:\Projects\ADSB_Server\ADSB-Bridge\bin\Debug\ADSB_Bridge.pdb

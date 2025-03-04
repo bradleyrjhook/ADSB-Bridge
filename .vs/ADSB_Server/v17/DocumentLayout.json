@@ -19,7 +19,7 @@
       "RelativeMoniker": "D:0:0:{3A453A24-56B6-4105-B65D-DEE4CF2433C7}|ADSB_Server.csproj|solutionrelative:aircraft.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3A453A24-56B6-4105-B65D-DEE4CF2433C7}|ADSB_Server.csproj|d:\\projects\\adsb_server\\adsb-bridge\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3A453A24-56B6-4105-B65D-DEE4CF2433C7}|ADSB_Server.csproj|D:\\Projects\\ADSB_Server\\ADSB-Bridge\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3A453A24-56B6-4105-B65D-DEE4CF2433C7}|ADSB_Server.csproj|solutionrelative:mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -46,8 +46,7 @@
               "RelativeToolTip": "MainForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAPUAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T23:01:14.871Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-03T23:01:14.871Z"
             },
             {
               "$type": "Document",
@@ -59,8 +58,7 @@
               "RelativeToolTip": "Aircraft.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-01T22:45:33.707Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-01T22:45:33.707Z"
             },
             {
               "$type": "Document",
@@ -72,8 +70,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-01T07:25:06.352Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-01T07:25:06.352Z"
             },
             {
               "$type": "Document",
@@ -83,7 +80,7 @@
               "RelativeDocumentMoniker": "MainForm.cs",
               "ToolTip": "D:\\Projects\\ADSB_Server\\ADSB-Bridge\\MainForm.cs",
               "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAQwDEAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-01T07:20:37.793Z",
               "EditorCaption": ""
@@ -97,8 +94,7 @@
               "ToolTip": "D:\\Projects\\ADSB_Server\\ADSB-Bridge\\MainForm.cs [Design]",
               "RelativeToolTip": "MainForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-01T07:05:48.137Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-03-01T07:05:48.137Z"
             }
           ]
         }
