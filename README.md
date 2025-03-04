@@ -2,6 +2,8 @@
 
 ADSB Bridge is a Windows application that bridges BaseStation's SBS-1 protocol (port 30003) to a JSON format for use with RadarSites and other compatible applications. It acts as a middleman, converting real-time aircraft data from BaseStation format into standardized JSON messages.
 
+<img src="https://iili.io/33Exs8G.png" width="800" height="auto">
+
 ## Features
 
 - Converts BaseStation format (SBS-1) to JSON in real-time
